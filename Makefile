@@ -1,33 +1,38 @@
-install:
-	@if [ ! -f "composer.phar" ] ; then \
-		echo "Installing composer..." ; \
-		curl -s https://getcomposer.org/installer | php ; \
-	fi
-	
-	@php composer.phar install --prefer-source --dev
+# customization
 
-update:
+MODULE_NAME = "Brickrouge\CSSClassNames"
+
+# do not edit the following lines
+
+usage:
+	@echo "test:  Runs the test suite.\ndoc:   Creates the documentation.\nclean: Removes the documentation, the dependencies and the Composer files."
+
+composer.phar:
+	@echo "Installing composer..."
+	@curl -s https://getcomposer.org/installer | php
+
+vendor: composer.phar
+	@if [ ! -d "vendor" ] ; then \
+		php composer.phar install --dev ; \
+	fi
+
+update: vendor
 	@php composer.phar update --prefer-source --dev
 
-test:
-	@if [ ! -d "vendor" ] ; then \
-		make install ; \
-	fi
+autoload: vendor
+	@php composer.phar dump-autoload
 
+test: vendor
 	@phpunit
 
-doc:
-	@if [ ! -d "vendor" ] ; then \
-		make install ; \
-	fi
-
+doc: vendor
 	@mkdir -p "docs"
 
 	@apigen \
 	--source ./ \
-	--destination docs/ --title Brickrouge/CSSClassNames \
-	--exclude "*/composer/*" \
+	--destination docs/ --title $(MODULE_NAME) \
 	--exclude "*/tests/*" \
+	--exclude "*/composer/*" \
 	--template-config /usr/share/php/data/ApiGen/templates/bootstrap/config.neon
 
 clean:

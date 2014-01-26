@@ -18,7 +18,7 @@
 		"source": "https://github.com/Brickrouge/CSSClassNames"
 	},
 	"require": {
-		"php": ">=5.3.0"
+		"php": ">=5.4.0"
 	},
 	"autoload": {
 		"classmap": [ "lib/" ],

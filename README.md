@@ -6,7 +6,7 @@ An API to support CSS class names.
 
 
 
-### Usage
+## Helper
 
 ```php
 <?php
@@ -27,6 +27,74 @@ render_css_class($class_names, 'node-id is-active is-disabled');              //
 render_css_class($class_names, array('-node-id', '-node-slug')));             // "is-active"
 render_css_class($class_names, '-node-id -node-slug');                        // "is-active"
 ```
+
+
+
+
+
+## CSSClassNames and CSSClassNamesProperty
+
+Classes that implements the `CSSClassNames` interface might want to use the `CSSClassNamesProperty`
+trait that provide support for the `css_class` and `css_class_names` magic properties.
+
+```php
+<?php
+
+namespace Icybee\Modules\Nodes;
+
+use Brickrouge\CSSClassNames;
+use Brickrouge\CSSClassNamesProperty;
+
+// …
+
+class Node extends ActiveRecord implements CSSClassNames
+{
+	use CSSClassNamesProperty;
+
+	// …
+
+	/**
+	 * Returns the CSS class names of the node.
+	 *
+	 * @return array[string]mixed
+	 */
+	protected function get_css_class_names()
+	{
+		$nid = $this->nid;
+		$slug = $this->slug;
+
+		return array
+		(
+			'type' => 'node',
+			'id' => $nid ? "node-{$nid}" : null,
+			'slug' => $slug ? "node-slug-{$slug}" : null,
+			'constructor' => 'constructor-' . \ICanBoogie\normalize($this->constructor)
+		);
+	}
+}
+```
+
+An instance of such a `Node` class could be used as follows:
+
+```php
+<?php
+
+// …
+
+$node->css_class;
+// node node-123 node-slug-example constructor-nodes
+$node->css_class_names;
+// [ 'type' => node, 'id' => 'node-123', 'slug' => 'node-slug-example', 'constructor' => 'constructor-nodes' ]
+$node->css_class('-slug -constructor');
+// node node-123
+$node->css_class('id slug');
+// node-123 node-slug-example
+```
+
+
+
+
+-----
 
 
 
