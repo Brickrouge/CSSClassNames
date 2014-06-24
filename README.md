@@ -1,4 +1,4 @@
-# CSSClassNames [![Build Status](https://travis-ci.org/Brickrouge/CSSClassNames.png?branch=master)](https://travis-ci.org/Brickrouge/CSSClassNames)
+# CSSClassNames [![Build Status](https://travis-ci.org/Brickrouge/CSSClassNames.png?branch=2.0)](https://travis-ci.org/Brickrouge/CSSClassNames)
 
 An API to support CSS class names.
 
@@ -13,19 +13,25 @@ An API to support CSS class names.
 
 namespace Brickrouge;
 
-$class_names = array
-(
+$class_names = [
+
 	'node-id' => 'node-id-13',
 	'node-slug' => 'node-slug-example',
 	'is-active' => true,
 	'is-disabled' => false
-);
 
-render_css_class($class_names)                                                // "node-id-13 node-slug-example is-active"
-render_css_class($class_names, array('node-id', 'is-active', 'is-disabled')); // "node-id-13 is-active"
-render_css_class($class_names, 'node-id is-active is-disabled');              // "node-id-13 is-active"
-render_css_class($class_names, array('-node-id', '-node-slug')));             // "is-active"
-render_css_class($class_names, '-node-id -node-slug');                        // "is-active"
+];
+
+render_css_class($class_names)
+// "node-id-13 node-slug-example is-active"
+render_css_class($class_names, [ 'node-id', 'is-active', 'is-disabled' ]);
+// "node-id-13 is-active"
+render_css_class($class_names, 'node-id is-active is-disabled');
+// "node-id-13 is-active"
+render_css_class($class_names, [ '-node-id', '-node-slug' ]);
+// "is-active"
+render_css_class($class_names, '-node-id -node-slug');
+// "is-active"
 ```
 
 
@@ -35,7 +41,7 @@ render_css_class($class_names, '-node-id -node-slug');                        //
 ## CSSClassNames and CSSClassNamesProperty
 
 Classes that implements the `CSSClassNames` interface might want to use the `CSSClassNamesProperty`
-trait that provide support for the `css_class` and `css_class_names` magic properties.
+trait that provides support for the `css_class` and `css_class_names` magic properties.
 
 ```php
 <?php
@@ -63,13 +69,14 @@ class Node extends ActiveRecord implements CSSClassNames
 		$nid = $this->nid;
 		$slug = $this->slug;
 
-		return array
-		(
+		return [
+
 			'type' => 'node',
 			'id' => $nid ? "node-{$nid}" : null,
 			'slug' => $slug ? "node-slug-{$slug}" : null,
 			'constructor' => 'constructor-' . \ICanBoogie\normalize($this->constructor)
-		);
+
+		];
 	}
 }
 ```
@@ -94,14 +101,14 @@ $node->css_class('id slug');
 
 
 
------
+----------
 
 
 
 
 ## Requirement
 
-The package requires PHP 5.3 or later.
+The package requires PHP 5.4 or later.
 
 
 
@@ -155,7 +162,7 @@ directory can later be cleaned with the `make clean` command.
 
 The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 
-[![Build Status](https://travis-ci.org/Brickrouge/CSSClassNames.png?branch=master)](https://travis-ci.org/Brickrouge/CSSClassNames)
+[![Build Status](https://travis-ci.org/Brickrouge/CSSClassNames.png?branch=2.0)](https://travis-ci.org/Brickrouge/CSSClassNames)
 
 
 
@@ -163,4 +170,4 @@ The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 
 ## License
 
-Brickrouge/CSSClassNames is licensed under the New BSD License - See the [LICENSE](https://raw.github.com/Brickrouge/CSSClassNames/master/LICENSE) file for details.
+Brickrouge/CSSClassNames is licensed under the New BSD License - See the [LICENSE](LICENSE) file for details.

@@ -19,18 +19,23 @@ namespace Brickrouge;
  *
  * namespace Brickrouge;
  *
- * $class_names = array
- * (
+ * $class_names = [
+ *
  *     'node-id' => 'node-id-13',
  *     'node-slug' => 'node-slug-example',
  *     'is-active' => true,
  *     'is-disabled' => false
- * );
  *
- * echo render_css_class($class_names);                                // "node-id-13 node-slug-example is-active"
- * echo render_css_class($class_names, array('node-id', 'is-active')); // "node-id-13 is-active"
- * echo render_css_class($class_names, 'node-id is-active');           // "node-id-13 is-active"
- * echo render_css_class($class_names, '-node-slug');                  // "node-id-13 is-active"
+ * ];
+ *
+ * echo render_css_class($class_names);
+ * // "node-id-13 node-slug-example is-active"
+ * echo render_css_class($class_names, [ 'node-id', 'is-active' ]);
+ * // "node-id-13 is-active"
+ * echo render_css_class($class_names, 'node-id is-active');
+ * // "node-id-13 is-active"
+ * echo render_css_class($class_names, '-node-slug');
+ * // "node-id-13 is-active"
  * </pre>
  *
  * @param array $names CSS class names.
