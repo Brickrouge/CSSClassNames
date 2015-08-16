@@ -18,7 +18,7 @@ namespace Brickrouge;
  * {@link css_class_names} magic properties.
  *
  * @property-read string $css_class The CSS class of the instance.
- * @property-read array[string]mixed $css_class_names The CSS class names of the instance.
+ * @property-read string[] $css_class_names The CSS class names of the instance.
  */
 trait CSSClassNamesProperty
 {
@@ -29,7 +29,7 @@ trait CSSClassNamesProperty
 	 *
 	 * @return string
 	 */
-	public function css_class($modifiers=null)
+	public function css_class($modifiers = null)
 	{
 		return render_css_class($this->css_class_names, $modifiers);
 	}
