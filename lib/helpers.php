@@ -43,7 +43,7 @@ namespace Brickrouge;
  *
  * @return string
  */
-function render_css_class(array $names, $modifiers=null)
+function render_css_class(array $names, string|array|null $modifiers = null): string
 {
 	$names = array_filter($names);
 
@@ -59,7 +59,7 @@ function render_css_class(array $names, $modifiers=null)
 
 		foreach ($modifiers as $k => $modifier)
 		{
-			if ($modifier{0} == '-')
+			if ($modifier[0] == '-')
 			{
 				unset($names[substr($modifier, 1)]);
 				unset($modifiers[$k]);

@@ -1,42 +1,49 @@
 # customization
 
 MODULE_NAME = "Brickrouge\CSSClassNames"
+PHPUNIT = vendor/bin/phpunit
 
 # do not edit the following lines
 
+.PHONY: usage
 usage:
 	@echo "test:  Runs the test suite.\ndoc:   Creates the documentation.\nclean: Removes the documentation, the dependencies and the Composer files."
 
-composer.phar:
-	@echo "Installing composer..."
-	@curl -s https://getcomposer.org/installer | php
+vendor:
+	@composer install
 
-vendor: composer.phar
-	@if [ ! -d "vendor" ] ; then \
-		php composer.phar install --dev ; \
-	fi
+# testing
 
-update: vendor
-	@php composer.phar update --prefer-source --dev
+.PHONY: test-dependencies
+test-dependencies: vendor
 
-autoload: vendor
-	@php composer.phar dump-autoload
+.PHONY: test
+test: test-dependencies test-cleanup
+	@$(PHPUNIT) $(ARGS)
 
-test: vendor
-	@phpunit
+.PHONY: test-coverage
+test-coverage: test-dependencies
+	@mkdir -p build/coverage
+	@XDEBUG_MODE=coverage $(PHPUNIT) --coverage-html build/coverage
 
-doc: vendor
-	@mkdir -p "docs"
+.PHONY: test-coveralls
+test-coveralls: test-dependencies
+	@mkdir -p build/logs
+	@XDEBUG_MODE=coverage $(PHPUNIT) --coverage-clover build/logs/clover.xml
 
-	@apigen \
-	--source ./ \
-	--destination docs/ --title $(MODULE_NAME) \
-	--exclude "*/tests/*" \
-	--exclude "*/composer/*" \
-	--template-config /usr/share/php/data/ApiGen/templates/bootstrap/config.neon
+.PHONY: test-cleanup
+test-cleanup:
+	@rm -rf tests/sandbox/*
 
-clean:
-	@rm -fR docs
-	@rm -fR vendor
-	@rm -f composer.lock
-	@rm -f composer.phar
+.PHONY: test-container
+test-container: test-container-82
+
+.PHONY: test-container-82
+test-container-82:
+	@-docker-compose run --rm app82 bash
+	@docker-compose down -v
+
+.PHONY: lint
+lint:
+	@XDEBUG_MODE=off phpcs -s
+	@XDEBUG_MODE=off vendor/bin/phpstan

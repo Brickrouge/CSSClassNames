@@ -22,10 +22,10 @@ namespace Brickrouge;
  */
 interface CSSClassNames
 {
-	/**
-	 * Renders the CSS class names into a string.
-	 *
-	 * @param array|string $modifiers Modifiers used to select or remove the class names.
-	 */
-	public function css_class($modifiers=null);
+    /**
+     * Renders the CSS class names into a string.
+     *
+     * @param string[]|string|null $modifiers Modifiers used to select or remove the class names.
+     */
+    public function css_class(array|string $modifiers = null): string;
 }

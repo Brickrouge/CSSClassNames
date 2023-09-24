@@ -3,13 +3,13 @@
 	"type": "library",
 	"description": "An API to support CSS class names.",
 	"keywords": [ "css", "class names" ],
-	"homepage": "http://icanboogie.org/",
+	"homepage": "https://icanboogie.org/",
 	"license": "BSD-3-Clause",
 	"authors": [
 		{
 			"name": "Olivier Laviale",
 			"email": "olivier.laviale@gmail.com",
-			"homepage": "http://www.weirdog.com/",
+			"homepage": "https://olvlv.com",
 			"role" : "Developer"
 		}
 	],
@@ -18,10 +18,21 @@
 		"source": "https://github.com/Brickrouge/CSSClassNames"
 	},
 	"require": {
-		"php": ">=5.4.0"
+		"php": ">=8.1.0"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"require-dev": {
+		"phpunit/phpunit": "^10.3",
+		"icanboogie/event": "^6.0"
 	},
 	"autoload": {
 		"classmap": [ "lib/" ],
 		"files": [ "lib/helpers.php" ]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Test\\Brickrouge\\": "tests"
+		}
 	}
 }

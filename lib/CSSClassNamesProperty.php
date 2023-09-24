@@ -25,22 +25,20 @@ trait CSSClassNamesProperty
 	/**
 	 * Return the rendered CSS class of the instance.
 	 *
-	 * @param string|array $modifiers CSS class names modifiers
+	 * @param string[]|string|null $modifiers CSS class names modifiers
 	 *
 	 * @return string
 	 */
-	public function css_class($modifiers = null)
-	{
+	public function css_class(array|string|null $modifiers = null): string
+    {
 		return render_css_class($this->css_class_names, $modifiers);
 	}
 
 	/**
 	 * Returns the CSS class of the instance.
-	 *
-	 * @return string
 	 */
-	protected function get_css_class()
-	{
+	protected function get_css_class(): string
+    {
 		return $this->css_class();
 	}
 
@@ -49,7 +47,7 @@ trait CSSClassNamesProperty
 	 *
 	 * @return array[string]mixed
 	 */
-	abstract protected function get_css_class_names();
+	abstract protected function get_css_class_names(): array;
 
 	/**
 	 * The method is declared as abstract because the {@link get_css_class()} and
